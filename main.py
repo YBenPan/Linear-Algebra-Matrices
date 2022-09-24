@@ -11,7 +11,8 @@ class Matrix:
         self.print("Matrix at the beginning")
 
     def print(self, msg):
-        print(msg, tabulate(self.matrix))
+        print(msg)
+        print(tabulate(self.matrix))
 
     def add(self, row1, row2):
         """Add row1 to row2 in matrix m"""
@@ -24,6 +25,7 @@ class Matrix:
         self.print(f"Matrix afer multiplying row {row} by {constant}")
 
     def swap(self, row1, row2):
+        """Swap row1 and row2"""
         self.matrix[[row1, row2]] = self.matrix[[row2, row1]]
         self.print(f"Matrix after swapping row {row1} and row {row2}")
 
