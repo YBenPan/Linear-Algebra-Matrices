@@ -4,6 +4,11 @@ from tabulate import tabulate
 
 class Matrix:
 
+    matrix = "Matrix in numpy array form"
+    nrow = "Number of rows"
+    ncol = "Number of columns"
+    v = "Verbosity"
+
     def __init__(self, arr, verbose=True):
         self.matrix = np.array(arr, dtype=float)
         self.nrow = self.matrix.shape[0]
@@ -13,7 +18,7 @@ class Matrix:
 
     def print(self, msg=""):
         print(msg)
-        print(tabulate(self.matrix, floatfmt=".1f"))
+        print(tabulate(self.matrix, floatfmt=".3f"))
 
     def add(self, row1, row2):
         """Add row1 to row2 in matrix m"""
@@ -39,13 +44,15 @@ class Matrix:
         if self.v:
             self.print(f"Add {constant:.2f} * row {row1} to row {row2}")
 
-    def row_echelon(self):
+    def reduce(self):
+        """Reduce matrix to reduced row echelon form"""
         assert self.nrow == self.ncol - 1
         for i in range(self.nrow):
             if self.matrix[i][i] != 0:
                 self.multiply(i, 1.00 / self.matrix[i][i])
             for j in range(i + 1, self.nrow):
                 self.add_multiply(i, -self.matrix[j][i], j)
+        self.print("Row echelon form")
         for i in range(self.nrow - 1, -1, -1):
             for j in range(i - 1, -1, -1):
                 self.add_multiply(i, -self.matrix[j][i], j)
@@ -61,7 +68,7 @@ def main():
         [[1.5, -2, 1, 3, 0.5, 7.5], [3, 1, -1, 4, -3, 16],
          [2, 6, -3, -1, 3, 78], [5, 2, 4, -2, 6, 71], [-3, 3, 2, 5, 4, 54]],
         verbose=False)
-    M.row_echelon()
+    M.reduce()
 
 
 main()
